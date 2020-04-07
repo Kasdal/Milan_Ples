@@ -9,7 +9,7 @@ public class Driver {
 
     public Driver() {
         input = new Scanner(System.in);
-        empAPI = new EmpAPI();
+        empAPI = new EmployeeAPI();
     }
     public static void main(String[] args) {
         new Driver();

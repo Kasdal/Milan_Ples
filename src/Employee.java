@@ -1,9 +1,14 @@
-public class Employee{
+public abstract class Employee{
 
     private double hoursWorked;
     private double hourlyRate;
-    private double NORMAL_WORKWEEK;
-    private double MIN_WAGE;
+    static double NORMAL_WORKWEEK = 37.5;
+    static double MIN_WAGE = 9.50;
+
+    public Employee(double hoursWorked, double hourlyRate) {
+        this.hoursWorked = hoursWorked;
+        this.hourlyRate = hourlyRate;
+    }
 
     public double getHoursWorked() {
         return hoursWorked;
@@ -36,5 +41,6 @@ public class Employee{
     public void setMIN_WAGE(double MIN_WAGE) {
         this.MIN_WAGE = MIN_WAGE;
     }
+    public abstract double calculateSallary();
 
 }
