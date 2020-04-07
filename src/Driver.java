@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Driver {
     private ArrayList<Employee> employees;
     private Scanner input = new Scanner(System.in);
-    private empAPI  EmployeeAPI;
+    private empAPI  empAPI;
 }
 
     public Driver() {
