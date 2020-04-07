@@ -1,2 +1,5 @@
-public class AdminWorker {
+public class AdminWorker extends Employee{
+
+
+
 }

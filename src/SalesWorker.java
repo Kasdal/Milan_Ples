@@ -1,2 +1,2 @@
-public class SalesWorker {
+public class SalesWorker extends Employee{
 }
