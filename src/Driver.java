@@ -1,17 +1,170 @@
-import java.util.ArrayList;
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.Scanner;
 
 public class Driver {
-    private ArrayList<Employee> employees;
     private Scanner input = new Scanner(System.in);
-    private empAPI  empAPI;
-}
+    private EmployeeAPI empAPI = new EmployeeAPI();
 
     public Driver() {
-        input = new Scanner(System.in);
-        empAPI = new EmployeeAPI();
+        runMenu();
     }
+
     public static void main(String[] args) {
         new Driver();
-        app.run();
     }
+
+    private int mainMenu() {
+        System.out.println("Administration Menu");
+        System.out.println("-------------------");
+        System.out.println("  1) Add a Manager");
+        System.out.println("  2) Add a  Admin employee");
+        System.out.println("  3) Add a Sales employee");
+        System.out.println("  4) Add employee to a department");
+        System.out.println("  5) Delete an employee");
+        System.out.println("  6) Delete an employee from a manager list");
+        System.out.println("  --------------------");
+        System.out.println("  7) Find the total of the salaries owed to all the employees");
+        System.out.println("  8) Find the average of the salaries owed to all the employees");
+        System.out.println("  9) Print the employee with the highest pay");
+        System.out.println("  10) Print the number of Employees");
+        System.out.println("  --------------------");
+        System.out.println("  11) List all employees in alphabetical order by first name");
+        System.out.println("  12) List all employees in alphabetical order by last name");
+        System.out.println("  13) List all employees in order by their hourly rate");
+        System.out.println("  ------------------");
+        System.out.println("  14) Search the system for an employee by second name");
+        System.out.println("  15) Search for an employee through a manager's department");
+        System.out.println("  -------");
+        System.out.println("  16) Save to XML");
+        System.out.println("  17) Load from XML");
+        System.out.println("  -------");
+        System.out.println("  0) Exit");
+        System.out.print(" ==>>");
+        return ScannerInput.readNextInt("==>>");
+    }
+
+    private void runMenu() {
+        for(int option = mainMenu(); option != 0; option = mainMenu()) {
+            switch (option) {
+                case 1:
+                    addManager();
+                    break;
+                case 2:
+                    addSalesWorker();
+                    break;
+                case 3:
+                    addAdminWorker();
+                    break;
+                case 4:
+                    addEmployeeToDepartment();
+                    break;
+                case 5:
+                    removeEmployeeByDept();
+                    break;
+
+            }
+        }
+    }
+
+    /**
+     * Adding the manager with following properties.
+     */
+    public void addManager(){
+        System.out.print("Enter the first name of the manager: ");
+        String firstName = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the last name of the manager: ");
+        String lastName = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the emailAddress of the manager: ");
+        String emailAddress = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the hours worked by the manager: ");
+        double hoursWorked = ScannerInput.readNextDouble("Enter hours: ");
+        System.out.println();
+        System.out.print("Enter the hourly rate of the manager: ");
+        double hourlyRate = ScannerInput.readNextDouble("Enter rate: ");
+        System.out.println();
+
+        Manager addManager = new Manager(firstName, lastName, hoursWorked, hourlyRate,emailAddress);
+        empAPI.addEmployee(addManager);
+    }
+
+    /**
+     * Adding Sales Worker with following properties.
+     */
+    public void addSalesWorker(){
+        System.out.print("Enter the first name of the sale worker: ");
+        String firstName = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the last name of the sale worker: ");
+        String lastName = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the emailAddress of the sale worker: ");
+        String emailAddress = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the hours worked by the sale worker: ");
+        double hoursWorked = ScannerInput.readNextDouble("Enter Hours: ");
+        System.out.println();
+        System.out.print("Enter the hourly rate of the sale worker: ");
+        double hourlyRate = ScannerInput.readNextDouble("Enter rate: ");
+        System.out.println();
+        System.out.print("Enter the percentage of the bonus for Sales Worker: ");
+        double bonus = ScannerInput.readNextDouble("Enter % of bonus: ");
+        System.out.println();
+
+        SalesWorker addSale = new SalesWorker(firstName, lastName, hoursWorked, hourlyRate,emailAddress,bonus);
+        empAPI.addEmployee(addSale);
+    }
+
+    /**
+     * Adding Admin Worker with following properties.
+     */
+    public void addAdminWorker(){
+        System.out.print("Enter the first name of the admin worker: ");
+        String firstName = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the last name of the admin worker: ");
+        String lastName = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the emailAddress of the admin worker: ");
+        String emailAddress = input.nextLine();
+        System.out.println();
+        System.out.print("Enter the hours worked by the admin worker: ");
+        double hoursWorked = ScannerInput.readNextDouble("Enter Hours: ");
+        System.out.println();
+        System.out.print("Enter the hourly rate of the admin worker: ");
+        double hourlyRate = ScannerInput.readNextDouble("Enter Rate: ");
+        System.out.println();
+        System.out.print("Enter the bonus value for Sales Worker: ");
+        double bonus = ScannerInput.readNextDouble("Enter allocated bonus: ");
+        System.out.println();
+
+        AdminWorker addAdmin = new AdminWorker(firstName, lastName, hoursWorked, hourlyRate,emailAddress,bonus);
+        empAPI.addEmployee(addAdmin);
+    }
+
+    public void addEmployeeToDepartment(){
+        System.out.println("Enter the index of the department: ");
+        System.out.println(empAPI.listOfEmployees());
+        int newemp = ScannerInput.readNextInt("");
+    }
+
+    /**
+     *
+     */
+    public void showEmployeeByDepartment(){
+        System.out.println(empAPI.listManagerEmployees());
+        int index = ScannerInput.readNextInt("Enter manager number");
+        if (index >= 0 && index < empAPI.numberOfEmployees()&& empAPI.getEmployees().get(index) instanceof Manager){
+            System.out.println(empAPI.listManagerEmployees((Manager)empAPI.getEmployees().get(index)));
+        }
+    }
+
+    public void removeEmployeeByDept(){
+
+    }
+
+}
+

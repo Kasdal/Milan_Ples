@@ -1,8 +1,8 @@
 public class AdminWorker extends Employee{
 
-    private int bonus;
+    private double bonus;
 
-    public int getBonus() {
+    public double getBonus() {
         return bonus;
     }
 
@@ -13,13 +13,38 @@ public class AdminWorker extends Employee{
             this.bonus = 0;
     }
 
-
-
-    public AdminWorker(double hoursWorked, double hourlyRate,int bonus){
-        super(hoursWorked,hourlyRate);
+    /**
+     * Creates AdminWorker as child of Emp class
+     * @param firstName
+     * @param lastName
+     * @param hoursWorked
+     * @param hourlyRate
+     * @param emailAddress
+     * @param bonus
+     */
+    public AdminWorker(String firstName, String lastName, double hoursWorked, double hourlyRate, String emailAddress,double bonus){
+        super(hoursWorked,hourlyRate,firstName,lastName,emailAddress);
     }
-    public double calculateSallary(){
-        return 0;
+    /**
+     * Salary calculation method
+     * @return Salary + any bonus entitled
+     */
+    public double calculateSalary(){
+        double salary = getSalary();
+        double bonus = getBonus();
+        return salary + bonus;
     }
-
+    @Override
+    public String toString() {
+        return "AdminWorker{" +
+                "firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", emailAddress='" + getEmailAddress() + '\'' +
+                ", hoursWorked=" + getHoursWorked() +
+                ", hourlyRate=" + getHourlyRate() +
+                ", bonus=" + bonus +
+                '}';
+    }
 }
+
+

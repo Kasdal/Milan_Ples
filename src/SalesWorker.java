@@ -1,22 +1,52 @@
 public class SalesWorker extends Employee{
 
-    private int bonus;
+    private double bonus;
 
-    public int getBonus() {
+
+
+    public void setBonus(double bonus) {
+            if(Utilities.validDoubleRange(0, 20, bonus))
+                this.bonus = bonus;
+            else this.bonus = 0;
+    }
+    public double getBonus() {
         return bonus;
     }
 
-    public void setBonus(int bonus) {
-            this.bonus = bonus;
-//probably write new validation method in util?
+    /**
+     * Creates SaleWorker as child of Emp class
+     * @param firstName
+     * @param lastName
+     * @param hoursWorked
+     * @param hourlyRate
+     * @param emailAddress
+     * @param bonus
+     */
+    public SalesWorker(String firstName, String lastName, double hoursWorked, double hourlyRate, String emailAddress, double bonus){
+        super(hoursWorked,hourlyRate,firstName,lastName,emailAddress);
+    }
+
+    /**
+     * Salary calculation method
+     * @return Salary + any bonus percentage entitled
+     */
+    public double calculateSalary(){
+    double salary = getSalary();
+    double bonus = (salary/100)*getBonus();
+        return salary + bonus;
     }
 
 
 
-    public SalesWorker(double hoursWorked, double hourlyRate,int bonus){
-        super(hoursWorked,hourlyRate);
-    }
-    public double calculateSallary(){
-        return 0;
+    @Override
+    public String toString() {
+        return "SalesWorker{" +
+                "firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", emailAddress='" + getEmailAddress() + '\'' +
+                ", hoursWorked=" + getHoursWorked() +
+                ", hourlyRate=" + getHourlyRate() +
+                ", bonus=" + bonus +
+                '}';
     }
 }
