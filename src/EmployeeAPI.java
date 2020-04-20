@@ -1,4 +1,11 @@
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class EmployeeAPI {
 
@@ -8,6 +15,33 @@ public class EmployeeAPI {
     public EmployeeAPI() {
         this.employees = new ArrayList<Employee>();
     }
+
+
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(ArrayList<Employee> employees) {
+        this.employees = employees;
+    }
+
+
+    public boolean addEmployeeToDepartment(int empindex, int mgrindex){
+        if (Utilities.validIndex(empindex,employees)&& Utilities.validIndex(mgrindex,employees) && employees.get(mgrindex)instanceof Manager){
+          ((Manager) employees.get(mgrindex)).addEmpToDepartment(employees.get(empindex));
+          return true;
+        }
+        return false;
+    }
+
+    public boolean removeEmployee(int empindex, int mgrindex){
+        if (Utilities.validIndex(empindex,employees)&& Utilities.validIndex(mgrindex,employees) && employees.get(mgrindex)instanceof Manager){
+            ((Manager) employees.get(mgrindex)).removeEmployee(empindex);
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * Parse through array,add elements from the array to the string
@@ -24,10 +58,6 @@ public class EmployeeAPI {
             }
             return listOfEmployees;
         }
-    }
-
-    public ArrayList<Employee> getEmployees() {
-        return employees;
     }
 
     /**
@@ -49,6 +79,7 @@ public class EmployeeAPI {
         }
 
     }
+
     public String listManagerEmployees(Manager m){
     ArrayList<Employee> emps = m.getDepartmentEmployees();
 
@@ -70,6 +101,18 @@ public class EmployeeAPI {
         return employees.size();
     }
 
+    public ArrayList<Employee> searchEmployees(String lastname){
+        ArrayList<Employee> matchemp = new ArrayList<>();
+        if(employees.size () == 0)
+            return null;
+        for (int i = 0; i < employees.size(); i++){
+            if(employees.get(i).getLastName().equalsIgnoreCase(lastname)){
+                matchemp.add(employees.get(i));
+            }
+        }
+        return matchemp;
+    }
+
     /**
      * Adds Employee to array
      * @param worker
@@ -77,7 +120,7 @@ public class EmployeeAPI {
     public void addEmployee(Employee worker){
         employees.add(worker);
     }
-// Check with Siobahn.
+
     /**
      * Removes the employee from the array.
      * @param employee
@@ -90,6 +133,23 @@ public class EmployeeAPI {
         } else {
             return false;
         }
+    }
+
+
+
+
+    public void load() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("employeeList.xml"));
+        this.employees = (ArrayList)is.readObject();
+        is.close();
+    }
+
+    public void save() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("employeeList.xml"));
+        out.writeObject(this.employees);
+        out.close();
     }
 
 }

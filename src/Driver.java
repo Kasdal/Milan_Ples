@@ -1,5 +1,6 @@
 import org.w3c.dom.ls.LSOutput;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Driver {
@@ -31,13 +32,11 @@ public class Driver {
         System.out.println("  --------------------");
         System.out.println("  11) List all employees in alphabetical order by first name");
         System.out.println("  12) List all employees in alphabetical order by last name");
-        System.out.println("  13) List all employees in order by their hourly rate");
         System.out.println("  ------------------");
-        System.out.println("  14) Search the system for an employee by second name");
-        System.out.println("  15) Search for an employee through a manager's department");
+        System.out.println("  13) Search for an employee through a manager's department");
         System.out.println("  -------");
-        System.out.println("  16) Save to XML");
-        System.out.println("  17) Load from XML");
+        System.out.println("  14) Save to XML");
+        System.out.println("  15) Load from XML");
         System.out.println("  -------");
         System.out.println("  0) Exit");
         System.out.print(" ==>>");
@@ -61,6 +60,22 @@ public class Driver {
                     break;
                 case 5:
                     removeEmployeeByDept();
+                    break;
+                case 14:
+                    try{
+                        empAPI.save();;
+                    }
+                    catch(Exception e){
+                        System.err.println("Error writing to file: " + e);
+                    }
+                    break;
+                case 15:
+                    try{
+                        empAPI.load();
+                    }
+                    catch(Exception e){
+                        System.err.println("Error reading from file: " + e);
+                    }
                     break;
 
             }
@@ -147,11 +162,17 @@ public class Driver {
 
     public void addEmployeeToDepartment(){
         System.out.println("Enter the index of the department: ");
+        System.out.println(empAPI.listManagerEmployees());
+        int managerindex = ScannerInput.readNextInt("");
         System.out.println(empAPI.listOfEmployees());
-        int newemp = ScannerInput.readNextInt("");
+        int newAdd = ScannerInput.readNextInt("Enter the employee index: ");
+        empAPI.addEmployeeToDepartment(newAdd,managerindex);
+
     }
 
     /**
+     *Prints out list of manager employees
+     * Preforms the validation on the chosen index that is the actual manager
      *
      */
     public void showEmployeeByDepartment(){
@@ -163,8 +184,35 @@ public class Driver {
     }
 
     public void removeEmployeeByDept(){
-
+        System.out.println(empAPI.listManagerEmployees());
+        int index = ScannerInput.readNextInt("Enter manager number");
+        if (index >= 0 && index < empAPI.numberOfEmployees()&& empAPI.getEmployees().get(index) instanceof Manager) {
+            System.out.println(empAPI.listManagerEmployees((Manager) empAPI.getEmployees().get(index)));
+            int employeeindex = ScannerInput.readNextInt("Enter employee index number: ");
+            empAPI.removeEmployee(employeeindex, index);
+        }
     }
 
-}
+    /**
+     * Ask user to enter last name, store it in a string
+     * Create new object of Employee array list
+     * Parse through array list and if match is found it will print it.
+     * Else give no match.
+     */
+    public void searchEmployees(){
+        System.out.println("Enter the last name of the employee: ");
+        String lastname = input.nextLine();
+        ArrayList<Employee> emplist = empAPI.searchEmployees(lastname);
+        if(emplist == null) {
+            System.out.println("No employees in the list ");
+        }else if(emplist.size() > 0){
+              for(int i = 0; i < emplist.size(); i++){
+                  System.out.println("Employee details" + emplist.get(i).toString());
+              }
+            }
+        else System.out.println("No matching records");
+        }
+    }
+
+
 

@@ -29,10 +29,29 @@ public class Manager extends Employee{
      * Number of employees in the department.
      * @return size of the array.
      */
-    public int departmentEmployees(){
+    public int departmentEmployeesNum(){
         return departmentEmployees.size();
     }
 
+    public void addEmpToDepartment(Employee emp){
+        departmentEmployees.add(emp);
+    }
+
+
+    /**
+     *
+     * @param emp
+     * @return true or false
+     */
+    public boolean removeEmployee(int emp){
+        try{
+            departmentEmployees.remove(emp);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
 
     public double calculateSalary(){
         // This takes the salary calculated by the superclass's getSalary and adds it to the managers bonus, defined as follows:

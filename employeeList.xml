@@ -1,0 +1,12 @@
+<object-stream>
+  <list>
+    <Manager>
+      <firstName>test</firstName>
+      <lastName>test</lastName>
+      <emailAddress>test</emailAddress>
+      <hoursWorked>33.0</hoursWorked>
+      <hourlyRate>33.0</hourlyRate>
+      <departmentEmployees/>
+    </Manager>
+  </list>
+</object-stream>
