@@ -18,10 +18,15 @@ public abstract class Employee{
      */
     public Employee(double hoursWorked, double hourlyRate, String firstName, String lastName, String emailAddress) {
         this.hoursWorked = hoursWorked;
-        this.hourlyRate = hourlyRate;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddress = emailAddress;
+        if (hourlyRate >= MIN_WAGE)
+            this.hourlyRate = hourlyRate;
+        else this.hourlyRate = MIN_WAGE;
+        this.firstName = Utilities.max20Chars(firstName);
+        this.lastName = Utilities.max20Chars(lastName);
+        if (Utilities.validEmail(emailAddress))
+            this.emailAddress = emailAddress;
+        else this.emailAddress = "Invalid entry";
+
 
     }
 
@@ -46,6 +51,7 @@ public abstract class Employee{
     }
 
     public void setEmailAddress(String emailAddress) {
+        if(Utilities.validEmail(emailAddress))
         this.emailAddress = emailAddress;
     }
 
@@ -80,10 +86,14 @@ public abstract class Employee{
     public void setMIN_WAGE(double MIN_WAGE) {
         this.MIN_WAGE = MIN_WAGE;
     }
+
     public abstract double calculateSalary();
 
+    /**
+     *
+     * @return calculated salary.
+     */
     public double getSalary(){
-        //    This method returns the basic salary(hourly-rate * amount <= 'NORMAL_WORKING_WEEK') + overtime (see above) based on hours worked (i.e. no bonuses included).
         if(hoursWorked <= NORMAL_WORKWEEK){
             return hoursWorked * hourlyRate;}
         else {
@@ -91,9 +101,11 @@ public abstract class Employee{
         }
     }
 
-
+    /**
+     *
+     * @return calculated overtime.
+     */
     public double getOvertime(){
-        //    This method should return the amount owed to the employee for overtime. This is calculated by multiplying the number of hours over the 'NORMALWORKINGWEEK' (i.e.39.5 hours) worked by the employee by the hourlyRate*2.
         if (hoursWorked > NORMAL_WORKWEEK){
             double hoursOver = hoursWorked - NORMAL_WORKWEEK;
             double overTimeRate = hourlyRate * 2;

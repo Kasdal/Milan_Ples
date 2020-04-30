@@ -1,5 +1,9 @@
 import org.w3c.dom.ls.LSOutput;
-
+/**
+ * App to manage employees structure and payment.
+ * @author Milan Ples
+ * @date 02/05/2020
+ */
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,11 +23,11 @@ public class Driver {
         System.out.println("Administration Menu");
         System.out.println("-------------------");
         System.out.println("  1) Add a Manager");
-        System.out.println("  2) Add a  Admin employee");
-        System.out.println("  3) Add a Sales employee");
+        System.out.println("  2) Add a  Sales employee");
+        System.out.println("  3) Add a Admin employee");
         System.out.println("  4) Add employee to a department");
         System.out.println("  5) Delete an employee");
-        System.out.println("  6) Delete an employee from a manager list");
+        System.out.println("  6) Show employee by dept");
         System.out.println("  --------------------");
         System.out.println("  7) Find the total of the salaries owed to all the employees");
         System.out.println("  8) Find the average of the salaries owed to all the employees");
@@ -60,6 +64,24 @@ public class Driver {
                     break;
                 case 5:
                     removeEmployeeByDept();
+                    break;
+                case 6:
+                    showEmployeeByDepartment();
+                    break;
+                case 7:
+                    System.out.println(empAPI.totalSalariesOwed());
+                    break;
+                case 8:
+                    System.out.println(empAPI.averageSalaryOwed());
+                    break;
+                case 9:
+                    System.out.println(empAPI.employeeWithHighestPay());
+                    break;
+                case 10:
+                    System.out.println("Number of employees: " + empAPI.numberOfEmployees());
+                    break;
+                case 13:
+                    searchEmployees();
                     break;
                 case 14:
                     try{
@@ -160,6 +182,11 @@ public class Driver {
         empAPI.addEmployee(addAdmin);
     }
 
+    /**
+     * Wait for input
+     * Prints the list of manager employees.
+     *
+     */
     public void addEmployeeToDepartment(){
         System.out.println("Enter the index of the department: ");
         System.out.println(empAPI.listManagerEmployees());
@@ -212,6 +239,14 @@ public class Driver {
             }
         else System.out.println("No matching records");
         }
+
+        public void deleteEmployeeByName(){
+            System.out.println("Enter the name of the employee: ");
+            String name = input.nextLine();
+            empAPI.deleteEmployeeByName(name);
+        }
+
+
     }
 
 

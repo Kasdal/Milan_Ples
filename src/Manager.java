@@ -53,6 +53,10 @@ public class Manager extends Employee{
         }
     }
 
+    /**
+     *
+     * @return salary with appropriate bonus value
+     */
     public double calculateSalary(){
         // This takes the salary calculated by the superclass's getSalary and adds it to the managers bonus, defined as follows:
         //The managers bonus is calculated by adding 1% of each of his/her employees' full salaries (including their bonuses).

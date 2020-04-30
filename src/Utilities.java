@@ -25,6 +25,9 @@ public class Utilities {
 
     static boolean validIntNonNegative(int number) { return (number >=0);}
 
+    static boolean validDoubleNonNegative(double number){
+        return (number >=0);
+    }
 
     static boolean validIndex(int index, ArrayList list){
         return (index >= 0 && index < list.size());

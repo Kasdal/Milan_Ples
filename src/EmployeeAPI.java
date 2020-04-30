@@ -101,6 +101,12 @@ public class EmployeeAPI {
         return employees.size();
     }
 
+    /**
+     * Create new object of employee array
+     * Parses through array ignoring case.
+     * @param lastname
+     * @return element that matches the search parameters
+     */
     public ArrayList<Employee> searchEmployees(String lastname){
         ArrayList<Employee> matchemp = new ArrayList<>();
         if(employees.size () == 0)
@@ -113,6 +119,17 @@ public class EmployeeAPI {
         return matchemp;
     }
 
+    /**
+     * Method takes in last name parameter to find the employee and removes it from the array of employees.
+     * @param lastname
+     */
+    public void deleteEmployeeByName(String lastname) {
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getLastName().equalsIgnoreCase(lastname)) {
+                employees.remove(employees.get(i));
+            }
+        }
+    }
     /**
      * Adds Employee to array
      * @param worker
@@ -133,6 +150,38 @@ public class EmployeeAPI {
         } else {
             return false;
         }
+    }
+
+    /**
+     *
+     * @return Total salary owed to all employees in aggregate.
+     */
+    public double totalSalariesOwed(){
+        double totalsallary = 0;
+        for (int i = 0; i <employees.size(); i++){
+            totalsallary +=employees.get(i).calculateSalary();
+        }
+        return totalsallary;
+    }
+
+    /**
+     *
+     * @return Calculated average salary owed.
+     */
+    public double averageSalaryOwed(){
+        return totalSalariesOwed()/numberOfEmployees();
+    }
+
+    public Employee employeeWithHighestPay(){
+        double largestpay = 0;
+        Employee largestemp = null;
+        for (int i = 0; i < employees.size(); i++){
+            if (employees.get(i).calculateSalary() > largestpay){
+                largestpay = employees.get(i).calculateSalary();
+                largestemp = employees.get(i);
+            }
+        }
+        return largestemp;
     }
 
 

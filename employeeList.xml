@@ -1,12 +1,44 @@
 <object-stream>
   <list>
     <Manager>
-      <firstName>test</firstName>
-      <lastName>test</lastName>
-      <emailAddress>test</emailAddress>
+      <firstName>Milan</firstName>
+      <lastName>PLes</lastName>
+      <emailAddress>Invalid entry</emailAddress>
+      <hoursWorked>0.0</hoursWorked>
+      <hourlyRate>443.0</hourlyRate>
+      <departmentEmployees/>
+    </Manager>
+    <Manager>
+      <firstName>Mdd</firstName>
+      <lastName>222</lastName>
+      <emailAddress>Invalid entry</emailAddress>
       <hoursWorked>33.0</hoursWorked>
       <hourlyRate>33.0</hourlyRate>
       <departmentEmployees/>
     </Manager>
+    <SalesWorker>
+      <firstName>Milan</firstName>
+      <lastName>ee</lastName>
+      <emailAddress>Invalid entry</emailAddress>
+      <hoursWorked>232.0</hoursWorked>
+      <hourlyRate>333.0</hourlyRate>
+      <bonus>0.0</bonus>
+    </SalesWorker>
+    <Manager>
+      <firstName>Milan</firstName>
+      <lastName>Ples</lastName>
+      <emailAddress>Invalid entry</emailAddress>
+      <hoursWorked>22.0</hoursWorked>
+      <hourlyRate>33.0</hourlyRate>
+      <departmentEmployees/>
+    </Manager>
+    <AdminWorker>
+      <firstName>Test</firstName>
+      <lastName>Me</lastName>
+      <emailAddress>Invalid entry</emailAddress>
+      <hoursWorked>33.0</hoursWorked>
+      <hourlyRate>12.0</hourlyRate>
+      <bonus>0.0</bonus>
+    </AdminWorker>
   </list>
 </object-stream>
